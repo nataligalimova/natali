@@ -142,50 +142,47 @@ paths:
 
 
 components:
-  schemas:
-    good:
-      type: object
-      required:
-       - name
-       - category
-       - details
-       - price
-      properties:
-        good_id:
-         type: string #строка
-         example: uid_123qwe
-         description: Уникальный идентификатор товара
-        name:
-         type: string #строка
-         example: dress
-         description: Название товара
-        category:
-         type: string #строка
-         example: cloth
-         description: Категория товара
-        details:
-         type: string #строка
-         example: Black dress size 42
-         description: Детали, описание товара
-        price:
-         type: number #число
-         example: 15000
-         description: Стоимость товара
+    schemas:
+        good:
+            type: object
+            required:
+            - name
+            - category
+            - details
+            - price
+            properties:
+                good_id:
+                    type: string #строка
+                    example: uid_123qwe
+                    description: Уникальный идентификатор товара
+                name:
+                    type: string #строка
+                    example: dress
+                    description: Название товара
+                category:
+                    type: string #строка
+                    example: cloth
+                    description: Категория товара
+                details:
+                    type: string #строка
+                    example: Black dress size 42
+                    description: Детали, описание товара
+                price:
+                    type: number #число
+                    example: 15000
+                    description: Стоимость товара
       
-    goods:
-     type: array #массив
-     items:
-       $ref: "#/components/schemas/good" #путь до этого места в данном документе
-    error: #создали ошибку-сообщение
-     type: object
-     required:
-       - code
-       - message
-     properties: 
-      code:
-       type: integer
-      message: 
-       type: string 
-       
-       
-       
+        goods:
+            type: array #массив
+            items:
+                $ref: "#/components/schemas/good" #путь до этого места в данном документе
+        error: #создали ошибку-сообщение
+            type: object
+            required:
+                - code
+                - message
+            properties: 
+                code:
+                    type: integer
+                message: 
+                    type: string 

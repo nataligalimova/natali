@@ -1,145 +1,143 @@
 openapi: 3.0.0
 info:
-  title: online store
-  version: 1.0.0
+    title: online store
+    version: 1.0.0
 servers:
   - url: https://virtserver.swaggerhub.com/kastielO/nataliya/1.0.0
     description: server 
 
 paths: 
-  /goods: #Получить список всех товаров
-    get: 
-      summary: Получить список всех товаров
-      tags:
-       - goods
-      operationId: getAllgoods
-      responses:
-        '200':
-         description: Успешный запрос списка всех товаров
-         content:
-            application/json:
-              schema:
-               $ref: "#/components/schemas/goods"
-        default:
-          description: нестандартные ситуации
-          content:
-            application/json:
-              schema:
-               $ref: "#/components/schemas/error"
-  /goods//{good_id}: #Получить информацию о конкретном товаре по его ID.
-    get: 
-      summary: Получить информацию о конкретном товаре
-      tags:
-       - goods
-      operationId: getgoodById
-      parameters: 
-        - name: good_id
-          in:   path 
-          required: true #обязательность
-          description: идентификатор товара
-          schema:
-           type: string 
-          example: uid_123qwe
+    /goods: #Получить список всех товаров
+        get: 
+            summary: Получить список всех товаров
+            tags:
+                - goods
+            operationId: getAllgoods
+            responses:
+                '200':
+                    description: Успешный запрос списка всех товаров
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/goods"
+                default:
+                    description: нестандартные ситуации
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/error"
+    /goods/{good_id}: #Получить информацию о конкретном товаре по его ID.
+        get: 
+            summary: Получить информацию о конкретном товаре
+            tags:
+                - goods
+            operationId: getgoodById
+            parameters: 
+                -   name: good_id
+                    in:   path 
+                    required: true #обязательность
+                    description: идентификатор товара
+                    schema:
+                        type: string 
+                    example: uid_123qwe
             
-      responses:
-        '200':
-         description: Успешный запрос информации о конкретном товаре
-         content:
-            application/json:
-              schema:
-               $ref: "#/components/schemas/good"
-        default:
-          description: нестандартные ситуации
-          content:
-            application/json:
-              schema:
-               $ref: "#/components/schemas/error"
+            responses:
+                '200':
+                    description: Успешный запрос информации о конкретном товаре
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/good"
+                default:
+                    description: нестандартные ситуации
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/error"
+                    
+        post: #Добавить новый товар
+            summary: Добавить новый товар
+            tags:
+            - goods 
+            operationId: createGood
+            requestBody:
+                required: true #обязательность
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/good"
+            responses:
+                '200':
+                    description: Успешное создание нового товара
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/goods"
+                default:
+                    description: нестандартные ситуации
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/error"
                
-    post: #Добавить новый товар
-     summary: Добавить новый товар
-     tags:
-       - goods 
-     operationId: createGood
-     requestBody:
-       required: true #обязательность
-       content:
-         application/json:
-             schema:
-               $ref: "#/components/schemas/good"
-     responses:
-        '200':
-         description: Успешное создание нового товара
-         content:
-            application/json:
-              schema:
-               $ref: "#/components/schemas/goods"
-        default:
-          description: нестандартные ситуации
-          content:
-            application/json:
-              schema:
-               $ref: "#/components/schemas/error"
-               
-               
-               
-    delete: #Удалить товар
-     summary: Удалить товар
-     tag:
-       - goods
-     operationid: deleteGoodById
-     parameters: 
-        - name: good_id
-          in:   path 
-          required: true #обязательность
-          description: идентификатор товара
-          schema:
-           type: string 
-          example: uid_123qwe
-     responses:
-        '200':
-         description: Успешное удаление товара
-         content:
-            application/json: {}
-        default:
-          description: нестандартные ситуации
-          content:
-            application/json:
-              schema:
-               $ref: "#/components/schemas/error"
-    put: #Обновить информацию о существующем товаре
-     summary: Обновить информацию о существующем товаре
-     tags:
-        - goods
-     operationId: updateGoodById
-     parameters:
-      - name: good_id
-        in: path
-        required: true
-        description: идентификатор товара, который нужно обновить
-        schema:
-         type: string
-         format: uuid
-        example: uid_123qwe
-     requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-             $ref: "#/components/schemas/good"
-             
-     responses:
-       '200':
-         description: Успешное обновление товара
-         content:
-           application/json:
-            schema:
-              $ref: "#/components/schemas/good"
-        default:
-         description: нестандартные ситуации
-          content:
-            application/json:
-              schema:
-               $ref: "#/components/schemas/error"
+        delete: #Удалить товар
+            summary: Удалить товар
+            tags:
+                - goods
+            operationId: deleteGoodById
+            parameters: 
+                -   name: good_id
+                    in: path 
+                    required: true #обязательность
+                    description: идентификатор товара
+                    schema:
+                        type: string 
+                        example: uid_123qwe
+            responses:
+                '200':
+                    description: Успешное удаление товара
+                    content:
+                        application/json: {}
+                default:
+                        description: нестандартные ситуации
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: "#/components/schemas/error"
+        put: #Обновить информацию о существующем товаре
+            summary: Обновить информацию о существующем товаре
+            tags:
+                - goods
+            operationId: updateGoodById
+            parameters:
+                -   name: good_id
+                    in: path
+                    required: true
+                    description: идентификатор товара, который нужно обновить
+                    schema:
+                        type: string
+                        format: uuid
+                    example: uid_123qwe
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/good"
+                    
+            responses:
+                '200':
+                    description: Успешное обновление товара
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/good"
+                default:
+                    description: нестандартные ситуации
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/error"
                
 
 
@@ -148,7 +146,7 @@ components:
     good:
       type: object
       required:
-       -name
+       - name
        - category
        - details
        - price

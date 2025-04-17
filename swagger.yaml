@@ -12,7 +12,7 @@ paths:
             summary: Получить список всех товаров
             tags:
                 - goods
-            operationId: getAllgoods
+            operationId: getAllGoods
             responses:
                 '200':
                     description: Успешный запрос списка всех товаров
@@ -26,39 +26,10 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/error"
-    /goods/{good_id}: #Получить информацию о конкретном товаре по его ID.
-        get: 
-            summary: Получить информацию о конкретном товаре
-            tags:
-                - goods
-            operationId: getgoodById
-            parameters: 
-                -   name: good_id
-                    in:   path 
-                    required: true #обязательность
-                    description: идентификатор товара
-                    schema:
-                        type: string 
-                    example: uid_123qwe
-            
-            responses:
-                '200':
-                    description: Успешный запрос информации о конкретном товаре
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/good"
-                default:
-                    description: нестандартные ситуации
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/error"
-                    
         post: #Добавить новый товар
             summary: Добавить новый товар
             tags:
-            - goods 
+                - goods 
             operationId: createGood
             requestBody:
                 required: true #обязательность
@@ -79,7 +50,36 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/error"
-               
+    /goods/{good_id}: #Получить информацию о конкретном товаре по его ID.
+        get: 
+            summary: Получить информацию о конкретном товаре
+            tags:
+                - goods
+            operationId: getGoodById
+            parameters: 
+                -   name: good_id
+                    in: path 
+                    required: true #обязательность
+                    description: идентификатор товара
+                    schema:
+                        type: string 
+                        format: uuid
+                        example: '550e8400-e29b-41d4-a716-446655440000'
+
+            responses:
+                '200':
+                    description: Успешный запрос информации о конкретном товаре
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/good"
+                default:
+                    description: нестандартные ситуации
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/error"
+
         delete: #Удалить товар
             summary: Удалить товар
             tags:
@@ -91,8 +91,9 @@ paths:
                     required: true #обязательность
                     description: идентификатор товара
                     schema:
-                        type: string 
-                        example: uid_123qwe
+                        type: string
+                        format: uuid
+                        example: '550e8400-e29b-41d4-a716-446655440000'
             responses:
                 '200':
                     description: Успешное удаление товара
@@ -117,14 +118,14 @@ paths:
                     schema:
                         type: string
                         format: uuid
-                    example: uid_123qwe
+                    example: '550e8400-e29b-41d4-a716-446655440000'
             requestBody:
                 required: true
                 content:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/good"
-                    
+
             responses:
                 '200':
                     description: Успешное обновление товара
@@ -138,8 +139,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/error"
-               
-
 
 components:
     schemas:
@@ -153,19 +152,20 @@ components:
             properties:
                 good_id:
                     type: string #строка
-                    example: uid_123qwe
+                    format: uuid
+                    example: '550e8400-e29b-41d4-a716-446655440000'
                     description: Уникальный идентификатор товара
                 name:
                     type: string #строка
-                    example: dress
+                    example: 'dress'
                     description: Название товара
                 category:
                     type: string #строка
-                    example: cloth
+                    example: 'cloth'
                     description: Категория товара
                 details:
                     type: string #строка
-                    example: Black dress size 42
+                    example: 'Black dress size 42'
                     description: Детали, описание товара
                 price:
                     type: number #число

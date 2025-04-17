@@ -1,0 +1,193 @@
+openapi: 3.0.0
+info:
+  title: online store
+  version: 1.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/kastielO/nataliya/1.0.0
+    description: server 
+
+paths: 
+  /goods: #Получить список всех товаров
+    get: 
+      summary: Получить список всех товаров
+      tags:
+       - goods
+      operationId: getAllgoods
+      responses:
+        '200':
+         description: Успешный запрос списка всех товаров
+         content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/goods"
+        default:
+          description: нестандартные ситуации
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/error"
+  /goods//{good_id}: #Получить информацию о конкретном товаре по его ID.
+    get: 
+      summary: Получить информацию о конкретном товаре
+      tags:
+       - goods
+      operationId: getgoodById
+      parameters: 
+        - name: good_id
+          in:   path 
+          required: true #обязательность
+          description: идентификатор товара
+          schema:
+           type: string 
+          example: uid_123qwe
+            
+      responses:
+        '200':
+         description: Успешный запрос информации о конкретном товаре
+         content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/good"
+        default:
+          description: нестандартные ситуации
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/error"
+               
+    post: #Добавить новый товар
+     summary: Добавить новый товар
+     tags:
+       - goods 
+     operationId: createGood
+     requestBody:
+       required: true #обязательность
+       content:
+         application/json:
+             schema:
+               $ref: "#/components/schemas/good"
+     responses:
+        '200':
+         description: Успешное создание нового товара
+         content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/goods"
+        default:
+          description: нестандартные ситуации
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/error"
+               
+               
+               
+    delete: #Удалить товар
+     summary: Удалить товар
+     tag:
+       - goods
+     operationid: deleteGoodById
+     parameters: 
+        - name: good_id
+          in:   path 
+          required: true #обязательность
+          description: идентификатор товара
+          schema:
+           type: string 
+          example: uid_123qwe
+     responses:
+        '200':
+         description: Успешное удаление товара
+         content:
+            application/json: {}
+        default:
+          description: нестандартные ситуации
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/error"
+    put: #Обновить информацию о существующем товаре
+     summary: Обновить информацию о существующем товаре
+     tags:
+        - goods
+     operationId: updateGoodById
+     parameters:
+      - name: good_id
+        in: path
+        required: true
+        description: идентификатор товара, который нужно обновить
+        schema:
+         type: string
+         format: uuid
+        example: uid_123qwe
+     requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+             $ref: "#/components/schemas/good"
+             
+     responses:
+       '200':
+         description: Успешное обновление товара
+         content:
+           application/json:
+            schema:
+              $ref: "#/components/schemas/good"
+        default:
+         description: нестандартные ситуации
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/error"
+               
+
+
+components:
+  schemas:
+    good:
+      type: object
+      required:
+       -name
+       - category
+       - details
+       - price
+      properties:
+        good_id:
+         type: string #строка
+         example: uid_123qwe
+         description: Уникальный идентификатор товара
+        name:
+         type: string #строка
+         example: dress
+         description: Название товара
+        category:
+         type: string #строка
+         example: cloth
+         description: Категория товара
+        details:
+         type: string #строка
+         example: Black dress size 42
+         description: Детали, описание товара
+        price:
+         type: number #число
+         example: 15000
+         description: Стоимость товара
+      
+    goods:
+     type: array #массив
+     items:
+       $ref: "#/components/schemas/good" #путь до этого места в данном документе
+    error: #создали ошибку-сообщение
+     type: object
+     required:
+       - code
+       - message
+     properties: 
+      code:
+       type: integer
+      message: 
+       type: string 
+       
+       
+       
